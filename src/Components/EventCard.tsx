@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PlaceIcon from "@mui/icons-material/Place";
+import "../Styles/EventCard.sass";
 
 function EventCard({
   _id,

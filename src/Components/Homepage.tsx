@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { IEvent } from "../Interfaces/IEvent";
 import { Container, Grid, Typography } from "@mui/material";
 import EventCard from "./EventCard";
+import "../Styles/Homepage.sass";
 
 function Homepage() {
   const [londonEvents, setLondonEvents] = useState<IEvent[]>([]);
