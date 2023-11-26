@@ -81,7 +81,7 @@ function EventCard({
             aria-label="search"
             onClick={routeChange}
           >
-            <PlaceIcon />
+            <PlaceIcon color="primary" />
           </IconButton>
           <Typography display="inline" variant="body1" color="text.primary">
             {location.name}
