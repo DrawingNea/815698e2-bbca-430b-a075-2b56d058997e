@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import PlaceIcon from "@mui/icons-material/Place";
+import DeleteIcon from "@mui/icons-material/Delete";
 import "../Styles/EventCard.sass";
 
 function EventCard({
@@ -20,6 +21,7 @@ function EventCard({
   flyerFront,
   location,
   addEventToCart,
+  removeEventFromCart,
 }: {
   _id: number;
   title: string;
@@ -28,6 +30,7 @@ function EventCard({
   flyerFront: string;
   location: { name: string; direction: string };
   addEventToCart?: Function;
+  removeEventFromCart?: Function;
 }) {
   const MAX_TITLE_LENGTH = 80;
 
@@ -100,6 +103,16 @@ function EventCard({
               onClick={() => addEventToCart(_id)}
             >
               +
+            </Button>
+          )}
+          {removeEventFromCart && (
+            <Button
+              className="actionButton cardButtons"
+              color="error"
+              variant="contained"
+              onClick={() => removeEventFromCart(_id)}
+            >
+              <DeleteIcon />
             </Button>
           )}
         </Grid>

@@ -5,10 +5,11 @@ import { useState } from 'react';
 
 function App() {
   const [shoppingCart, setShoppingCart] = useState([])
+  const [removeFromCart, setRemoveFromCart] = useState(0);
   return (
     <div className="App">
-      <Navbar passShoppingCart={shoppingCart} />
-      <Homepage passShoppingCart={setShoppingCart}  />
+      <Navbar passShoppingCart={shoppingCart} passRemoveFromCart={setRemoveFromCart} />
+      <Homepage passShoppingCart={setShoppingCart} passRemoveFromCart={removeFromCart} />
     </div>
   );
 }

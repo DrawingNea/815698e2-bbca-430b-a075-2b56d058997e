@@ -6,10 +6,12 @@ function CartDrawer({
     cartOpen,
     setCartOpen,
     shoppingCart,
+    removeEventFromCart,
   }: {
     cartOpen: boolean;
     setCartOpen: Function;
     shoppingCart: IEvent[];
+    removeEventFromCart: Function;
   }) {
     return (
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
@@ -23,6 +25,7 @@ function CartDrawer({
               title={cartItem.title}
               flyerFront={cartItem.flyerFront}
               location={cartItem.venue}
+              removeEventFromCart={removeEventFromCart}
             />
           ))}
           <Box textAlign="center">

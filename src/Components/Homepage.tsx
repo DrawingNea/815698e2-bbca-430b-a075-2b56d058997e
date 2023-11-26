@@ -5,7 +5,7 @@ import { Container, Grid, Typography } from "@mui/material";
 import EventCard from "./EventCard";
 import "../Styles/Homepage.sass";
 
-function Homepage({ passShoppingCart }: { passShoppingCart: Function }) {
+function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: Function, passRemoveFromCart: number }) {
   const [londonEvents, setLondonEvents] = useState<IEvent[]>([]);
   const [groupedEvents, setGroupedEvents] = useState<EventGroup[]>([]);
   const [error, setError] = useState({});
@@ -96,6 +96,19 @@ function Homepage({ passShoppingCart }: { passShoppingCart: Function }) {
     passShoppingCart(shoppingCart);
   }, [shoppingCart]);
 
+  //Receive removable event and update shopping cart and events
+  useEffect(() => {
+    let shoppingCartCopy = [...shoppingCart];
+    let indexOfItem = shoppingCart.findIndex(
+      (shoppingCartItem) => shoppingCartItem._id === passRemoveFromCart
+    );
+    let londonEventsCopy = [...londonEvents];
+    londonEventsCopy.push(shoppingCartCopy[indexOfItem]);
+    setLondonEvents(londonEventsCopy);
+    shoppingCartCopy.splice(indexOfItem, 1);
+    setShoppingCart(shoppingCartCopy);
+  }, [passRemoveFromCart]);
+
   return (
     <div className="Homepage">
       <Container fixed>
@@ -132,22 +145,6 @@ function Homepage({ passShoppingCart }: { passShoppingCart: Function }) {
             </>
           );
         })}
-        <Grid container my={2} justifyContent="space-evenly">
-          {londonEvents.map((eventItem) => {
-            return (
-              <Grid item my={2}>
-                <EventCard
-                  _id={eventItem._id}
-                  startDate={eventItem.startTime}
-                  endDate={eventItem.endTime}
-                  title={eventItem.title}
-                  flyerFront={eventItem.flyerFront}
-                  location={eventItem.venue}
-                />
-              </Grid>
-            );
-          })}
-        </Grid>
       </Container>
     </div>
   );

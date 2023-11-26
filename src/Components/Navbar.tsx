@@ -7,7 +7,7 @@ import CartDrawer from "./CartDrawer";
 import { useEffect, useState } from "react";
 import { IEvent } from "../Interfaces/IEvent";
 
-function Navbar({passShoppingCart,}:{passShoppingCart: any;}){
+function Navbar({ passShoppingCart, passRemoveFromCart,}: { passShoppingCart: any; passRemoveFromCart: Function;}) {
   //open and close shopping cart drawer
   const [cartOpen, setCartOpen] = useState(false);
   function toggleShoppingCart() {
@@ -19,11 +19,22 @@ function Navbar({passShoppingCart,}:{passShoppingCart: any;}){
   useEffect(() => {
     setShoppingCart(passShoppingCart);
   }, [passShoppingCart]);
-    return (<>
-    <Box sx={{ flexGrow: 1 }}>
+
+  //Pass id of event to remove
+  const [removeFromCart, setRemoveFromCart] = useState(0);
+  function removeEventFromCart(id: number) {
+    setRemoveFromCart(id);
+  }
+  useEffect(() => {
+    passRemoveFromCart(removeFromCart);
+  }, [removeFromCart]);
+
+  return (
+    <>
+      <Box sx={{ flexGrow: 1 }}>
         <AppBar className="navbar" component="nav" elevation={0}>
           <Toolbar>
-            <SearchBar/>
+            <SearchBar />
             <IconButton className="navIcons" type="button" aria-label="search">
               <FilterAltIcon />
             </IconButton>
@@ -45,7 +56,9 @@ function Navbar({passShoppingCart,}:{passShoppingCart: any;}){
         cartOpen={cartOpen}
         setCartOpen={setCartOpen}
         shoppingCart={shoppingCart}
+        removeEventFromCart={removeEventFromCart}
       />
-      </>)
+    </>
+  );
 }
 export default Navbar;
