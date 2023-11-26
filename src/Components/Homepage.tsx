@@ -132,6 +132,30 @@ function Homepage({
     );
   }, [passSearchFieldValue]);
 
+  //Remove previous stickyHeader overlap with new one
+  function checkVisibility() {
+    const homepageHeight = window.innerHeight;
+    const containers = document.querySelectorAll(".eventContainer");
+    for(let i = 0; i < containers.length; ++i) {
+      const container = containers[i] as HTMLElement;
+      if(container === null) continue;
+      const title = container.previousSibling as HTMLElement | null;
+      if(title === null) continue;
+      if(container.getBoundingClientRect().bottom < homepageHeight/20)
+        title.style.top = "unset";
+      else
+      {
+        title.style.top = "";
+        break;
+      }
+    }
+  }
+
+  useEffect(() => {
+    window.removeEventListener('scroll', checkVisibility);
+    window.addEventListener('scroll', checkVisibility)
+  });
+
   return (
     <div className="Homepage">
       <Container fixed>
@@ -144,7 +168,7 @@ function Homepage({
                   {eventGroup.dateString}
                 </Typography>
               ) : null}
-              <Grid container my={2} justifyContent="space-evenly">
+              <Grid container my={2} justifyContent="space-evenly" className="eventContainer">
                 {eventGroup.eventIds.map((eventId: number) => {
                   let eventById = filteredEvents.find(
                     (eventById: IEvent) => eventById._id === eventId
