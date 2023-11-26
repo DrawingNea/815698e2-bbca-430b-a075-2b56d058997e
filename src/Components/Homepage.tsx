@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { IEvent } from "../Interfaces/IEvent";
+import { Container, Grid, Typography } from "@mui/material";
+import EventCard from "./EventCard";
 
 function Homepage() {
   const [londonEvents, setLondonEvents] = useState<IEvent[]>([]);
@@ -46,6 +48,28 @@ function Homepage() {
     };
     getData();
   }, []);
-  return <></>;
+  return (
+    <div className="Homepage">
+      <Container fixed>
+        <Typography id="title">Public Events</Typography>
+        <Grid container my={2} justifyContent="space-evenly">
+          {londonEvents.map((eventItem) => {
+            return (
+              <Grid item my={2}>
+                <EventCard
+                  _id={eventItem._id}
+                  startDate={eventItem.startTime}
+                  endDate={eventItem.endTime}
+                  title={eventItem.title}
+                  flyerFront={eventItem.flyerFront}
+                  location={eventItem.venue}
+                />
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Container>
+    </div>
+  );
 }
 export default Homepage;
