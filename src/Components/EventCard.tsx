@@ -19,6 +19,7 @@ function EventCard({
   endDate,
   flyerFront,
   location,
+  addEventToCart,
 }: {
   _id: number;
   title: string;
@@ -26,8 +27,8 @@ function EventCard({
   endDate: Date;
   flyerFront: string;
   location: { name: string; direction: string };
+  addEventToCart?: Function;
 }) {
-
   const MAX_TITLE_LENGTH = 80;
 
   //Redirect to google maps location of event
@@ -92,13 +93,15 @@ function EventCard({
           </Typography>
         </div>
         <Grid container justifyContent="flex-end">
+          {addEventToCart && (
             <Button
               className="actionButton cardButtons"
               variant="contained"
-              onClick={undefined}
+              onClick={() => addEventToCart(_id)}
             >
               +
             </Button>
+          )}
         </Grid>
       </CardContent>
     </Card>

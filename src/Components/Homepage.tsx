@@ -5,11 +5,12 @@ import { Container, Grid, Typography } from "@mui/material";
 import EventCard from "./EventCard";
 import "../Styles/Homepage.sass";
 
-function Homepage() {
+function Homepage({ passShoppingCart }: { passShoppingCart: Function }) {
   const [londonEvents, setLondonEvents] = useState<IEvent[]>([]);
   const [groupedEvents, setGroupedEvents] = useState<EventGroup[]>([]);
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(true);
+  const [shoppingCart, setShoppingCart] = useState<IEvent[]>([]);
 
   // Get Data from REST-API and save to londonEvents
   useEffect(() => {
@@ -40,7 +41,7 @@ function Homepage() {
           )
           .filter((filterEvents) => !filterEvents.title.includes("CANCELLED"))
           .sort((a, b) => a.startTime.getTime() - b.startTime.getTime());
-          let groups = findEventGroups(actualData);
+        let groups = findEventGroups(actualData);
         setLondonEvents(actualData);
         setGroupedEvents(groups);
         setError({});
@@ -77,6 +78,24 @@ function Homepage() {
     setGroupedEvents(findEventGroups(londonEvents));
   }, [londonEvents]);
 
+  //find and add item to shopping cart
+  function addEventToCart(idOfEvent: number) {
+    let eventArray = [...londonEvents];
+    let indexOfEvent = eventArray.findIndex(
+      (eventEntry) => eventEntry._id === idOfEvent
+    );
+    let shoppingCartArray = [...shoppingCart];
+    shoppingCartArray.push(eventArray[indexOfEvent]);
+    setShoppingCart(shoppingCartArray);
+    eventArray.splice(indexOfEvent, 1);
+    setLondonEvents(eventArray);
+  }
+
+  //Pass shopping cart when updated
+  useEffect(() => {
+    passShoppingCart(shoppingCart);
+  }, [shoppingCart]);
+
   return (
     <div className="Homepage">
       <Container fixed>
@@ -104,6 +123,7 @@ function Homepage() {
                         title={eventById.title}
                         flyerFront={eventById.flyerFront}
                         location={eventById.venue}
+                        addEventToCart={addEventToCart}
                       />
                     </Grid>
                   );
