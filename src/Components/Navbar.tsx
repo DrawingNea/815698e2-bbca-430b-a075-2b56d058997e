@@ -7,7 +7,15 @@ import CartDrawer from "./CartDrawer";
 import { useEffect, useState } from "react";
 import { IEvent } from "../Interfaces/IEvent";
 
-function Navbar({ passShoppingCart, passRemoveFromCart,}: { passShoppingCart: any; passRemoveFromCart: Function;}) {
+function Navbar({
+  passShoppingCart,
+  passRemoveFromCart,
+  passSearchFieldValue,
+}: {
+  passShoppingCart: any;
+  passRemoveFromCart: Function;
+  passSearchFieldValue: Function;
+}) {
   //open and close shopping cart drawer
   const [cartOpen, setCartOpen] = useState(false);
   function toggleShoppingCart() {
@@ -29,12 +37,18 @@ function Navbar({ passShoppingCart, passRemoveFromCart,}: { passShoppingCart: an
     passRemoveFromCart(removeFromCart);
   }, [removeFromCart]);
 
+  //Passing the value of search field input to parent component
+  const [searchFieldValue, setSearchFieldValue] = useState("");
+  useEffect(() => {
+    passSearchFieldValue(searchFieldValue);
+  }, [searchFieldValue]);
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar className="navbar" component="nav" elevation={0}>
           <Toolbar>
-            <SearchBar />
+            <SearchBar setSearchFieldValue={setSearchFieldValue} />
             <IconButton className="navIcons" type="button" aria-label="search">
               <FilterAltIcon />
             </IconButton>
@@ -45,7 +59,7 @@ function Navbar({ passShoppingCart, passRemoveFromCart,}: { passShoppingCart: an
               aria-label="search"
               onClick={toggleShoppingCart}
             >
-              <Badge badgeContent={1} color="error">
+              <Badge badgeContent={shoppingCart.length} color="error">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>

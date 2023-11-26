@@ -5,9 +5,18 @@ import { Container, Grid, Typography } from "@mui/material";
 import EventCard from "./EventCard";
 import "../Styles/Homepage.sass";
 
-function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: Function, passRemoveFromCart: number }) {
+function Homepage({
+  passShoppingCart,
+  passRemoveFromCart,
+  passSearchFieldValue,
+}: {
+  passShoppingCart: Function;
+  passRemoveFromCart: number;
+  passSearchFieldValue: string;
+}) {
   const [londonEvents, setLondonEvents] = useState<IEvent[]>([]);
   const [groupedEvents, setGroupedEvents] = useState<EventGroup[]>([]);
+  const [filteredEvents, setFilteredEvents] = useState<IEvent[]>([]);
   const [error, setError] = useState({});
   const [loading, setLoading] = useState(true);
   const [shoppingCart, setShoppingCart] = useState<IEvent[]>([]);
@@ -44,6 +53,7 @@ function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: 
         let groups = findEventGroups(actualData);
         setLondonEvents(actualData);
         setGroupedEvents(groups);
+        setFilteredEvents(actualData);
         setError({});
       } catch (err: any) {
         setError(err.message);
@@ -75,8 +85,8 @@ function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: 
 
   //update event groups when changes in events
   useEffect(() => {
-    setGroupedEvents(findEventGroups(londonEvents));
-  }, [londonEvents]);
+    setGroupedEvents(findEventGroups(filteredEvents));
+  }, [londonEvents, filteredEvents]);
 
   //find and add item to shopping cart
   function addEventToCart(idOfEvent: number) {
@@ -89,6 +99,7 @@ function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: 
     setShoppingCart(shoppingCartArray);
     eventArray.splice(indexOfEvent, 1);
     setLondonEvents(eventArray);
+    setFilteredEvents(eventArray);
   }
 
   //Pass shopping cart when updated
@@ -103,11 +114,23 @@ function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: 
       (shoppingCartItem) => shoppingCartItem._id === passRemoveFromCart
     );
     let londonEventsCopy = [...londonEvents];
+    let filteredEventsCopy = [...filteredEvents];
     londonEventsCopy.push(shoppingCartCopy[indexOfItem]);
+    filteredEventsCopy.push(shoppingCartCopy[indexOfItem]);
     setLondonEvents(londonEventsCopy);
+    setFilteredEvents(filteredEventsCopy);
     shoppingCartCopy.splice(indexOfItem, 1);
     setShoppingCart(shoppingCartCopy);
   }, [passRemoveFromCart]);
+
+  // Receive search filter for filtering events
+  useEffect(() => {
+    setFilteredEvents(
+      londonEvents.filter((londonEvent) =>
+        londonEvent.title.includes(passSearchFieldValue)
+      )
+    );
+  }, [passSearchFieldValue]);
 
   return (
     <div className="Homepage">
@@ -123,7 +146,7 @@ function Homepage({ passShoppingCart,passRemoveFromCart, }: { passShoppingCart: 
               ) : null}
               <Grid container my={2} justifyContent="space-evenly">
                 {eventGroup.eventIds.map((eventId: number) => {
-                  let eventById = londonEvents.find(
+                  let eventById = filteredEvents.find(
                     (eventById: IEvent) => eventById._id === eventId
                   );
                   if (eventById === undefined) return <></>;
