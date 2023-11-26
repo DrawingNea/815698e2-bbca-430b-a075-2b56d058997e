@@ -2,6 +2,7 @@ import { Box, AppBar, Toolbar, IconButton, Badge } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SearchBar from "./SearchBar";
+import "../Styles/Navbar.sass";
 
 function Navbar(){
     return (<>

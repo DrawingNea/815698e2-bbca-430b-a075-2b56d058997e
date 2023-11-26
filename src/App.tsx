@@ -1,4 +1,4 @@
-import './Styles/App.css';
+import './Styles/App.sass';
 import Homepage from './Components/Homepage';
 import Navbar from './Components/Navbar';
 

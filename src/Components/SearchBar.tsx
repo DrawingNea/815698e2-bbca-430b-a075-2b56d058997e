@@ -1,5 +1,7 @@
 import { IconButton, InputBase, Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import "../Styles/Navbar.sass";
+import "../Styles/SearchBar.sass";
 
 function SearchBar() {
   return (
