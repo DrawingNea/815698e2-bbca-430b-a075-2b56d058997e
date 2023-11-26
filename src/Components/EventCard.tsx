@@ -30,6 +30,11 @@ function EventCard({
 
   const MAX_TITLE_LENGTH = 80;
 
+  //Redirect to google maps location of event
+  const routeChange = () => {
+    window.open(location.direction);
+  };
+
   return (
     <Card
       sx={{ minWidth: 275 }}
@@ -74,7 +79,7 @@ function EventCard({
             className="cardButtons"
             type="button"
             aria-label="search"
-            onClick={undefined}
+            onClick={routeChange}
           >
             <PlaceIcon />
           </IconButton>
