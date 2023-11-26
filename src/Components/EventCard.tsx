@@ -41,11 +41,7 @@ function EventCard({
 
   return (
     <Card
-      sx={{ minWidth: 275 }}
-      style={{
-        height: "600px",
-        width: "350px",
-      }}
+      className="eventCard"
     >
       <CardHeader
         title={

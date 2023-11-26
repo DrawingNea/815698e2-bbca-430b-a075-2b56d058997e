@@ -168,14 +168,14 @@ function Homepage({
                   {eventGroup.dateString}
                 </Typography>
               ) : null}
-              <Grid container my={2} justifyContent="space-evenly" className="eventContainer">
+              <Grid container justifyContent="space-evenly" className="eventContainer">
                 {eventGroup.eventIds.map((eventId: number) => {
                   let eventById = filteredEvents.find(
                     (eventById: IEvent) => eventById._id === eventId
                   );
                   if (eventById === undefined) return <></>;
                   return (
-                    <Grid item my={2}>
+                    <Grid item>
                       <EventCard
                         _id={eventById._id}
                         startDate={eventById.startTime}
