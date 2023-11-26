@@ -45,27 +45,25 @@ function Navbar({
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar className="navbar" component="nav" elevation={0}>
-          <Toolbar>
-            <SearchBar setSearchFieldValue={setSearchFieldValue} />
-            <IconButton className="navIcons" type="button" aria-label="search">
-              <FilterAltIcon />
-            </IconButton>
-            <Box sx={{ flexGrow: 1 }} />
-            <IconButton
-              className="navIcons"
-              type="button"
-              aria-label="search"
-              onClick={toggleShoppingCart}
-            >
-              <Badge badgeContent={shoppingCart.length} color="error">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-      </Box>
+      <AppBar className="navbar" component="nav" elevation={0}>
+        <Toolbar>
+          <SearchBar setSearchFieldValue={setSearchFieldValue} />
+          <IconButton className="navIcons" type="button" aria-label="search">
+            <FilterAltIcon />
+          </IconButton>
+          <Box sx={{ flexGrow: 1 }} />
+          <IconButton
+            className="navIcons"
+            type="button"
+            aria-label="search"
+            onClick={toggleShoppingCart}
+          >
+            <Badge badgeContent={shoppingCart.length} color="error">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </Toolbar>
+      </AppBar>
       <CartDrawer
         cartOpen={cartOpen}
         setCartOpen={setCartOpen}
