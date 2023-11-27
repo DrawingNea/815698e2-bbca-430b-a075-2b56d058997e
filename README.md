@@ -22,12 +22,6 @@ Clone the project
   git clone https://github.com/DrawingNea/815698e2-bbca-430b-a075-2b56d058997e.git
 ```
 
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
 Install dependencies
 
 ```bash
